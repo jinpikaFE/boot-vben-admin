@@ -6,7 +6,7 @@ const auth: AppRouteModule = {
   path: '/auth',
   name: 'Auth',
   component: LAYOUT,
-  redirect: '/auth/index',
+  redirect: '/auth/user',
   meta: {
     icon: 'ion:grid-outline',
     title: t('routes.auth.auth'),
