@@ -4,6 +4,7 @@ module.exports = {
   customSyntax: 'postcss-less',
   extends: ['stylelint-config-standard', 'stylelint-config-prettier'],
   rules: {
+    'custom-property-no-missing-var-function': null,
     'selector-class-pattern': null,
     'selector-pseudo-class-no-unknown': [
       true,
