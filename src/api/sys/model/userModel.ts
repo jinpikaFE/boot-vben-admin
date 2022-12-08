@@ -24,15 +24,21 @@ export interface LoginResultModel {
  * @description: Get user information return value
  */
 export interface GetUserInfoModel {
-  roles: RoleInfo[];
+  // roles: RoleInfo[];
   // 用户id
-  userId: string | number;
+  id: string | number;
   // 用户名
   username: string;
-  // 真实名字
-  realName: string;
   // 头像
-  avatar: string;
-  // 介绍
-  desc?: string;
+  icon: string;
+  /** 创建时间 */
+  createTime: string;
+  /** 昵称 */
+  nickName: string;
+  /** 登录时间 */
+  loginTime?: string;
+  /** 是否启用 */
+  status: 0 | 1;
+  /** 备注 */
+  note?: string;
 }

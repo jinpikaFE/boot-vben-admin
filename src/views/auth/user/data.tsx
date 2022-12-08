@@ -1,58 +1,40 @@
-import { Tag } from 'ant-design-vue';
 import { BasicColumn, FormSchema } from '/@/components/Table/index';
-import { ErrorTypeEnum } from '/@/enums/exceptionEnum';
 import { useI18n } from '/@/hooks/web/useI18n';
+import { formatToDateTime } from '/@/utils/dateUtil';
 
 const { t } = useI18n();
 
 export function getColumns(): BasicColumn[] {
   return [
     {
-      dataIndex: 'type',
-      title: t('sys.errorLog.tableColumnType'),
-      width: 80,
-      customRender: ({ text }) => {
-        const color =
-          text === ErrorTypeEnum.VUE
-            ? 'green'
-            : text === ErrorTypeEnum.RESOURCE
-            ? 'cyan'
-            : text === ErrorTypeEnum.PROMISE
-            ? 'blue'
-            : ErrorTypeEnum.AJAX
-            ? 'red'
-            : 'purple';
-        return <Tag color={color}>{() => text}</Tag>;
+      dataIndex: 'username',
+      title: t('views.auth.user.username'),
+    },
+    {
+      dataIndex: 'nickName',
+      title: t('views.auth.user.nickname'),
+    },
+    {
+      dataIndex: 'email',
+      title: t('views.auth.user.email'),
+    },
+    {
+      dataIndex: 'createTime',
+      title: t('views.auth.user.create_time'),
+      customRender: ({ record }) => {
+        return formatToDateTime(record?.createTime);
       },
     },
     {
-      dataIndex: 'url',
-      title: 'URL',
-      width: 200,
+      dataIndex: 'loginTime',
+      title: t('views.auth.user.login_time'),
+      customRender: ({ record }) => {
+        return formatToDateTime(record?.loginTime);
+      },
     },
     {
-      dataIndex: 'time',
-      title: t('sys.errorLog.tableColumnDate'),
-      width: 160,
-    },
-    {
-      dataIndex: 'file',
-      title: t('sys.errorLog.tableColumnFile'),
-      width: 200,
-    },
-    {
-      dataIndex: 'name',
-      title: 'Name',
-      width: 200,
-    },
-    {
-      dataIndex: 'message',
-      title: t('sys.errorLog.tableColumnMsg'),
-      width: 300,
-    },
-    {
-      dataIndex: 'stack',
-      title: t('sys.errorLog.tableColumnStackMsg'),
+      dataIndex: 'status',
+      title: t('views.auth.user.enable'),
     },
   ];
 }

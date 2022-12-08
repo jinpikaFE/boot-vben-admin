@@ -3,6 +3,7 @@
   import { BasicTable, useTable } from '/@/components/Table';
   import { getColumns, searchFormSchema } from './data';
   import { reactive } from 'vue';
+  import { getUserList } from '/@/api/sys/user';
 
   const searchInfo = reactive<Recordable>({});
 
@@ -10,7 +11,13 @@
 
   const [registerTable] = useTable({
     title: '账号列表',
-    // api: getAccountList,
+    api: async ({ page, pageSize }) => {
+      const res = await getUserList({
+        pageNum: page,
+        pageSize,
+      });
+      return res?.list;
+    },
     rowKey: 'id',
     columns,
     formConfig: {

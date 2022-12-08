@@ -8,6 +8,8 @@ enum Api {
   Logout = '/v1/admin/logout',
   GetUserInfo = '/v1/admin/info',
   GetPermCode = '/getPermCode',
+
+  GetUserList = '/v1/admin/list',
 }
 
 /**
@@ -38,4 +40,12 @@ export function getPermCode() {
 
 export function doLogout() {
   return defHttp.get({ url: Api.Logout });
+}
+
+/**
+ * @description: 获取用户列表
+ * @returns
+ */
+export function getUserList(params: Global.BasicPageParams) {
+  return defHttp.get<Global.ListResult<GetUserInfoModel>>({ url: Api.GetUserList, params });
 }
