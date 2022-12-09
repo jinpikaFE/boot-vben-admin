@@ -10,6 +10,9 @@ enum Api {
   GetPermCode = '/getPermCode',
 
   GetUserList = '/v1/admin/list',
+  CreateUser = '/v1/admin/register',
+  DelUser = '/v1/admin/delete',
+  UpdateUser = '/v1/admin/update',
 }
 
 /**
@@ -48,4 +51,30 @@ export function doLogout() {
  */
 export function getUserList(params: Global.BasicPageParams) {
   return defHttp.get<Global.ListResult<GetUserInfoModel>>({ url: Api.GetUserList, params });
+}
+
+/**
+ * @description: 添加用户
+ * @returns
+ */
+export function createUser(data: GetUserInfoModel) {
+  return defHttp.post<GetUserInfoModel>({ url: Api.CreateUser, data });
+}
+
+/**
+ * @description: 删除用户
+ * @returns
+ */
+export function delUser(data: { id: string | number }) {
+  return defHttp.post({
+    url: `${Api.DelUser}/${data?.id}`,
+  });
+}
+
+/**
+ * @description: 更新用户
+ * @returns
+ */
+export function updateUser(data: { id: string | number } & GetUserInfoModel) {
+  return defHttp.post<GetUserInfoModel>({ url: `${Api.UpdateUser}/${data?.id}`, data });
 }
