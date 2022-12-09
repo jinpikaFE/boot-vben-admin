@@ -1,18 +1,16 @@
 <script lang="ts" setup>
   import { BasicModal } from '/@/components/Modal';
-  import { BasicForm, useForm } from '/@/components/Form/index';
+  import { BasicForm, FormActionType, useForm } from '/@/components/Form/index';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { schemas } from './data';
   import { createUser, updateUser } from '/@/api/sys/user';
-  import { useAttrs, watchEffect } from 'vue';
+  import { ref, watchEffect } from 'vue';
   import { GetUserInfoModel } from '/@/api/sys/model/userModel';
-
-  const attrs = useAttrs();
   const props = defineProps<{ record: GetUserInfoModel }>();
 
-  console.log(props, attrs);
-
   const emit = defineEmits(['reload', 'closeModal']);
+
+  const formElRef = ref<Nullable<FormActionType>>(null);
 
   const { createMessage } = useMessage();
 
@@ -24,12 +22,14 @@
   });
 
   watchEffect(() => {
-    if (props?.record) {
-      setFieldsValue(props?.record);
-      updateSchema([{ field: 'password', ifShow: false }]);
-    } else {
-      updateSchema([{ field: 'password', ifShow: true }]);
-      resetFields();
+    if (formElRef.value) {
+      if (props?.record) {
+        setFieldsValue(props?.record);
+        updateSchema([{ field: 'password', ifShow: false }]);
+      } else {
+        updateSchema([{ field: 'password', ifShow: true }]);
+        resetFields();
+      }
     }
   });
 
@@ -50,6 +50,11 @@
 
 <template>
   <BasicModal v-bind="$attrs" @ok="submit" :width="800">
-    <BasicForm @register="register" @submit="handleSubmit" :showActionButtonGroup="false" />
+    <BasicForm
+      @register="register"
+      @submit="handleSubmit"
+      :showActionButtonGroup="false"
+      ref="formElRef"
+    />
   </BasicModal>
 </template>
