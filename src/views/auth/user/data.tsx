@@ -35,6 +35,15 @@ export function getColumns(): BasicColumn[] {
     {
       dataIndex: 'status',
       title: t('views.auth.user.enable'),
+      customRender: ({ record }) => {
+        if (record?.status === 1) {
+          return '是';
+        }
+        if (record?.status === 0) {
+          return '否';
+        }
+        return '-';
+      },
     },
   ];
 }

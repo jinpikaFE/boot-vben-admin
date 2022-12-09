@@ -46,4 +46,22 @@ export const schemas: FormSchema[] = [
       placeholder: '请输入',
     },
   },
+  {
+    field: 'status',
+    component: 'RadioGroup',
+    label: '是否启用',
+    componentProps: {
+      placeholder: '请输入',
+      options: [
+        {
+          label: '是',
+          value: 1,
+        },
+        {
+          label: '否',
+          value: 0,
+        },
+      ],
+    },
+  },
 ];

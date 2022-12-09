@@ -103,7 +103,7 @@
     </BasicTable>
     <FormModal
       @register="modalRegister"
-      title="添加"
+      :title="state.record ? '编辑' : '添加'"
       :record="state.record"
       @reload="reload"
       @closeModal="closeModal"

@@ -16,7 +16,7 @@
 
   const { createMessage } = useMessage();
 
-  const [register, { submit, setFieldsValue, resetFields }] = useForm({
+  const [register, { submit, setFieldsValue, resetFields, updateSchema }] = useForm({
     labelWidth: 120,
     labelCol: { span: 6 },
     wrapperCol: { span: 14 },
@@ -26,7 +26,9 @@
   watchEffect(() => {
     if (props?.record) {
       setFieldsValue(props?.record);
+      updateSchema([{ field: 'password', ifShow: false }]);
     } else {
+      updateSchema([{ field: 'password', ifShow: true }]);
       resetFields();
     }
   });
