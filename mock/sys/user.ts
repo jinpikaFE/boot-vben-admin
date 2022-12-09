@@ -46,7 +46,7 @@ const fakeCodeList: any = {
 export default [
   // mock user login
   {
-    url: '/basic-api/login',
+    url: '/api/v1/admin/login',
     timeout: 200,
     method: 'post',
     response: ({ body }) => {
@@ -69,12 +69,12 @@ export default [
     },
   },
   {
-    url: '/basic-api/getUserInfo',
+    url: '/api/v1/admin/info',
     method: 'get',
     response: (request: requestParams) => {
       const token = getRequestToken(request);
       if (!token) return resultError('Invalid token');
-      const checkUser = createFakeUserList().find((item) => item.token === token);
+      const checkUser = createFakeUserList().find((item) => 'Bearer ' + item.token === token);
       if (!checkUser) {
         return resultError('The corresponding user information was not obtained!');
       }
@@ -82,13 +82,13 @@ export default [
     },
   },
   {
-    url: '/basic-api/getPermCode',
+    url: '/api/v1/admin/getPermCode',
     timeout: 200,
     method: 'get',
     response: (request: requestParams) => {
       const token = getRequestToken(request);
       if (!token) return resultError('Invalid token');
-      const checkUser = createFakeUserList().find((item) => item.token === token);
+      const checkUser = createFakeUserList().find((item) => 'Bearer ' + item.token === token);
       if (!checkUser) {
         return resultError('Invalid token!');
       }
@@ -98,13 +98,13 @@ export default [
     },
   },
   {
-    url: '/basic-api/logout',
+    url: '/api/v1/admin/logout',
     timeout: 200,
     method: 'get',
     response: (request: requestParams) => {
       const token = getRequestToken(request);
       if (!token) return resultError('Invalid token');
-      const checkUser = createFakeUserList().find((item) => item.token === token);
+      const checkUser = createFakeUserList().find((item) => 'Bearer ' + item.token === token);
       if (!checkUser) {
         return resultError('Invalid token!');
       }
