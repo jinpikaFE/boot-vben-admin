@@ -1,4 +1,8 @@
+import { h } from 'vue';
 import { FormSchema } from '/@/components/Form';
+import { uploadApi } from '/@/api/sys/upload';
+import { CropperAvatar } from '/@/components/Cropper';
+import { UploadApiResult } from '/@/api/sys/model/uploadModel';
 
 /** 表单列 */
 export const schemas: FormSchema[] = [
@@ -37,6 +41,31 @@ export const schemas: FormSchema[] = [
       placeholder: '请输入',
     },
     rules: [{ required: true, message: '请输入' }],
+  },
+  {
+    field: 'icon',
+    component: 'Upload',
+    label: '头像',
+    rules: [
+      {
+        validator(rule, value) {
+          if (!value) {
+            return Promise.reject(new Error('请上传'));
+          }
+          return Promise.resolve();
+        },
+      },
+    ],
+    render: ({ model, field }) => {
+      return h(CropperAvatar, {
+        placeholder: '请输入',
+        uploadApi,
+        value: model[field],
+        onChange: (e: ChangeEvent, data: UploadApiResult) => {
+          model[field] = data?.data?.url;
+        },
+      } as any);
+    },
   },
   {
     field: 'note',

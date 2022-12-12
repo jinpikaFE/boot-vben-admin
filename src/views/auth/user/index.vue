@@ -107,6 +107,7 @@
       :record="state.record"
       @reload="reload"
       @closeModal="closeModal"
+      destroyOnClose
     />
   </PageWrapper>
 </template>

@@ -14,7 +14,7 @@
 
   const { createMessage } = useMessage();
 
-  const [register, { submit, setFieldsValue, resetFields, updateSchema }] = useForm({
+  const [register, { submit, setFieldsValue, updateSchema }] = useForm({
     labelWidth: 120,
     labelCol: { span: 6 },
     wrapperCol: { span: 14 },
@@ -28,7 +28,6 @@
         updateSchema([{ field: 'password', ifShow: false }]);
       } else {
         updateSchema([{ field: 'password', ifShow: true }]);
-        resetFields();
       }
     }
   });
@@ -44,7 +43,6 @@
     }
     emit('reload');
     emit('closeModal');
-    resetFields();
   };
 </script>
 
