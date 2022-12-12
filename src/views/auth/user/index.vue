@@ -7,6 +7,9 @@
   import { delUser, getUserList } from '/@/api/sys/user';
   import { useModal } from '/@/components/Modal';
   import { useMessage } from '/@/hooks/web/useMessage';
+  import { useI18n } from '/@/hooks/web/useI18n';
+
+  const { t } = useI18n();
 
   const searchInfo = reactive<Recordable>({});
   const { createMessage } = useMessage();
@@ -42,6 +45,7 @@
     useSearchForm: true,
     showTableSetting: true,
     bordered: true,
+    showIndexColumn: false,
     handleSearchInfoFn(info) {
       console.log('handleSearchInfoFn', info);
       return info;
@@ -75,7 +79,7 @@
 </script>
 
 <template>
-  <PageWrapper title="用户管理">
+  <PageWrapper :title="t('routes.auth.user')">
     <BasicTable @register="registerTable" :searchInfo="searchInfo">
       <template #toolbar>
         <a-button type="primary" @click="handleCreate"> 添加 </a-button>

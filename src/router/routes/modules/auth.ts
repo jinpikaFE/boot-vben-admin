@@ -22,6 +22,15 @@ const auth: AppRouteModule = {
         icon: 'simple-icons:about-dot-me',
       },
     },
+    {
+      path: 'menu',
+      name: 'Menu',
+      component: () => import('/@/views/auth/menu/index.vue'),
+      meta: {
+        title: t('routes.auth.menu'),
+        icon: 'simple-icons:about-dot-me',
+      },
+    },
   ],
 };
 

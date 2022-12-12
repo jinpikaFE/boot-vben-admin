@@ -7,6 +7,10 @@ const { t } = useI18n();
 export function getColumns(): BasicColumn[] {
   return [
     {
+      dataIndex: 'id',
+      title: t('common.id'),
+    },
+    {
       dataIndex: 'username',
       title: t('views.auth.user.username'),
     },

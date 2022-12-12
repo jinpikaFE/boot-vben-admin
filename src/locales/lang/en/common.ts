@@ -17,4 +17,5 @@ export default {
 
   light: 'Light',
   dark: 'Dark',
+  id: 'ID',
 };

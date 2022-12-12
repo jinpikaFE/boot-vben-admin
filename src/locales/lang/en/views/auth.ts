@@ -7,4 +7,11 @@ export default {
     login_time: 'login_time',
     enable: 'enable',
   },
+  menu: {
+    title: 'title',
+    level: 'level',
+    name: 'name',
+    hidden: 'hidden',
+    sort: 'sort',
+  },
 };
