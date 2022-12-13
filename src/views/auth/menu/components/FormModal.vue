@@ -14,7 +14,7 @@
 
   const { createMessage } = useMessage();
 
-  const [register, { submit, setFieldsValue, updateSchema }] = useForm({
+  const [register, { submit, setFieldsValue }] = useForm({
     labelWidth: 120,
     labelCol: { span: 6 },
     wrapperCol: { span: 14 },
@@ -25,9 +25,6 @@
     if (formElRef.value) {
       if (props?.record) {
         setFieldsValue(props?.record);
-        updateSchema([{ field: 'password', ifShow: false }]);
-      } else {
-        updateSchema([{ field: 'password', ifShow: true }]);
       }
     }
   });

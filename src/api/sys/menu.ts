@@ -37,5 +37,6 @@ export const createMenu = (data: MenuModal) => {
  * @returns
  */
 export const updateMenu = (data: MenuModal) => {
-  return defHttp.post<MenuModal>({ url: `${Api.UpdateMenu}/${data?.id}` });
+  const { id, ...extraData } = data;
+  return defHttp.post({ url: `${Api.UpdateMenu}/${id}`, data: extraData });
 };

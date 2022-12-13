@@ -1,3 +1,6 @@
+import { Tag } from 'ant-design-vue';
+import { h } from 'vue';
+import Icon from '/@/components/Icon';
 import { BasicColumn, FormSchema } from '/@/components/Table/index';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { formatToDateTime } from '/@/utils/dateUtil';
@@ -17,6 +20,9 @@ export function getColumns(): BasicColumn[] {
     {
       dataIndex: 'icon',
       title: t('common.icon'),
+      customRender: ({ record }) => {
+        return h(Icon, { icon: record.icon });
+      },
     },
     {
       dataIndex: 'level',
@@ -31,10 +37,10 @@ export function getColumns(): BasicColumn[] {
       title: t('views.auth.menu.hidden'),
       customRender: ({ record }) => {
         if (record?.hidden === 1) {
-          return '是';
+          return h(Tag, { color: 'green' }, () => '是');
         }
         if (record?.hidden === 0) {
-          return '否';
+          return h(Tag, { color: 'red' }, () => '否');
         }
         return '-';
       },

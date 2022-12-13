@@ -5,6 +5,26 @@ import { treeKeyChange } from '/@/utils/helper/treeHelper';
 /** 表单列 */
 export const schemas: FormSchema[] = [
   {
+    field: 'type',
+    component: 'RadioButtonGroup',
+    label: '菜单类型',
+    defaultValue: 0,
+    componentProps: {
+      placeholder: '请选择',
+      options: [
+        {
+          label: '菜单',
+          value: 0,
+        },
+        {
+          label: '按钮',
+          value: 1,
+        },
+      ],
+    },
+    required: true,
+  },
+  {
     field: 'parentId',
     component: 'ApiTreeSelect',
     label: '上级菜单',
@@ -60,6 +80,8 @@ export const schemas: FormSchema[] = [
     field: 'hidden',
     component: 'RadioGroup',
     label: '是否显示',
+    required: true,
+    defaultValue: 1,
     componentProps: {
       placeholder: '请选择',
       options: [
