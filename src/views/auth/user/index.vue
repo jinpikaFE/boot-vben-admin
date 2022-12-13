@@ -59,11 +59,6 @@
 
   const [modalRegister, { openModal, closeModal }] = useModal();
 
-  const handleEdit = (record: Recordable) => {
-    openModal();
-    state.record = record;
-  };
-
   const handleDelete = async (record: Recordable) => {
     await delUser({
       id: record?.id,
@@ -72,6 +67,10 @@
     reload();
   };
 
+  const handleEdit = (record: Recordable) => {
+    openModal();
+    state.record = record;
+  };
   const handleCreate = () => {
     state.record = undefined;
     openModal();

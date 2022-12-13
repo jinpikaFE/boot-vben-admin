@@ -46,6 +46,7 @@ export const schemas: FormSchema[] = [
     field: 'icon',
     component: 'Upload',
     label: '头像',
+    required: true,
     rules: [
       {
         validator(rule, value) {
@@ -80,7 +81,7 @@ export const schemas: FormSchema[] = [
     component: 'RadioGroup',
     label: '是否启用',
     componentProps: {
-      placeholder: '请输入',
+      placeholder: '请选择',
       options: [
         {
           label: '是',

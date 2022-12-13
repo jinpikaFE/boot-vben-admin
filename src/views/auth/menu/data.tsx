@@ -1,5 +1,6 @@
 import { BasicColumn, FormSchema } from '/@/components/Table/index';
 import { useI18n } from '/@/hooks/web/useI18n';
+import { formatToDateTime } from '/@/utils/dateUtil';
 
 const { t } = useI18n();
 
@@ -12,6 +13,10 @@ export function getColumns(): BasicColumn[] {
     {
       dataIndex: 'title',
       title: t('views.auth.menu.title'),
+    },
+    {
+      dataIndex: 'icon',
+      title: t('common.icon'),
     },
     {
       dataIndex: 'level',
@@ -37,6 +42,13 @@ export function getColumns(): BasicColumn[] {
     {
       dataIndex: 'sort',
       title: t('views.auth.menu.sort'),
+    },
+    {
+      dataIndex: 'createTime',
+      title: t('common.createTime'),
+      customRender: ({ record }) => {
+        return formatToDateTime(record?.createTime);
+      },
     },
   ];
 }

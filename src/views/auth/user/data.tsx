@@ -24,14 +24,14 @@ export function getColumns(): BasicColumn[] {
     },
     {
       dataIndex: 'createTime',
-      title: t('views.auth.user.create_time'),
+      title: t('common.createTime'),
       customRender: ({ record }) => {
         return formatToDateTime(record?.createTime);
       },
     },
     {
       dataIndex: 'loginTime',
-      title: t('views.auth.user.login_time'),
+      title: t('views.auth.user.loginTime'),
       customRender: ({ record }) => {
         return formatToDateTime(record?.loginTime);
       },

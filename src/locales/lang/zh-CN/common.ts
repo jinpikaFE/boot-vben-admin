@@ -17,5 +17,9 @@ export default {
 
   light: '亮色主题',
   dark: '黑暗主题',
+
+  /** 常用字段 */
   id: '序号',
+  createTime: '创建时间',
+  icon: '图标',
 };

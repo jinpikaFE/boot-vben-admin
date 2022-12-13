@@ -187,3 +187,39 @@ export function treeMapEach(
     };
   }
 }
+
+type IOrigin = {
+  children?: IOrigin[];
+} & Record<string, any>;
+/**
+ * 将树结构转换为select适配的label，value形式
+ * @param originData
+ * @param param1
+ */
+export const treeKeyChange = (
+  originData: IOrigin[],
+  {
+    labelField = 'label',
+    valueField = 'value',
+  }: {
+    labelField: string;
+    valueField: string;
+  },
+): IOrigin[] => {
+  const reduceFn = (data: IOrigin[]): IOrigin[] => {
+    return data?.map((iterator) => {
+      if (iterator?.children && iterator?.children?.length > 0) {
+        return {
+          label: iterator?.[labelField],
+          value: iterator?.[valueField],
+          children: reduceFn(iterator.children),
+        };
+      }
+      return {
+        label: iterator?.[labelField],
+        value: iterator?.[valueField],
+      };
+    });
+  };
+  return reduceFn(originData);
+};

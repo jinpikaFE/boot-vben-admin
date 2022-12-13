@@ -18,4 +18,6 @@ export default {
   light: 'Light',
   dark: 'Dark',
   id: 'ID',
+  createTime: 'CreateTime',
+  icon: 'Icon',
 };

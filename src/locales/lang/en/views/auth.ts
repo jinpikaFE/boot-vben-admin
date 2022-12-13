@@ -1,17 +1,16 @@
 export default {
   user: {
-    username: 'username',
-    nickname: 'nickname',
-    email: 'email',
-    create_time: 'create_time',
-    login_time: 'login_time',
-    enable: 'enable',
+    username: 'Username',
+    nickname: 'Nickname',
+    email: 'Email',
+    loginTime: 'LoginTime',
+    enable: 'Enable',
   },
   menu: {
-    title: 'title',
-    level: 'level',
-    name: 'name',
-    hidden: 'hidden',
-    sort: 'sort',
+    title: 'Title',
+    level: 'Level',
+    name: 'Name',
+    hidden: 'Hidden',
+    sort: 'Sort',
   },
 };
