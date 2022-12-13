@@ -10,7 +10,7 @@ export default {
     title: 'Title',
     level: 'Level',
     name: 'Name',
-    hidden: 'Hidden',
+    isShow: 'IsShow',
     sort: 'Sort',
   },
 };

@@ -10,7 +10,7 @@ export default {
     title: '菜单名称',
     level: '等级',
     name: '前端标识名',
-    hidden: '是否显示',
+    isShow: '是否显示',
     sort: '排序',
   },
 };

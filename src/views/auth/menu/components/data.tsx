@@ -77,7 +77,7 @@ export const schemas: FormSchema[] = [
     rules: [{ required: true, message: '请输入' }],
   },
   {
-    field: 'hidden',
+    field: 'isShow',
     component: 'RadioGroup',
     label: '是否显示',
     required: true,

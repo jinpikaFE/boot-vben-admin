@@ -33,13 +33,13 @@ export function getColumns(): BasicColumn[] {
       title: t('views.auth.menu.name'),
     },
     {
-      dataIndex: 'hidden',
-      title: t('views.auth.menu.hidden'),
+      dataIndex: 'isShow',
+      title: t('views.auth.menu.isShow'),
       customRender: ({ record }) => {
-        if (record?.hidden === 1) {
+        if (record?.isShow === 1) {
           return h(Tag, { color: 'green' }, () => '是');
         }
-        if (record?.hidden === 0) {
+        if (record?.isShow === 0) {
           return h(Tag, { color: 'red' }, () => '否');
         }
         return '-';
