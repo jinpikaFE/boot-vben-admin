@@ -15,6 +15,11 @@ export interface RouteItem {
  */
 export type getMenuListResultModel = RouteItem[];
 
+enum MenuTyoeEnum {
+  MENU,
+  BTN,
+}
+
 /**
  * UmsMenu对象0，后台菜单表
  * @export
@@ -34,11 +39,11 @@ export interface MenuModal {
    */
   createTime?: string;
   /**
-   * 前端隐藏
+   * 是否显示
    * @type {number}
    * @memberof MenuModal
    */
-  hidden?: number;
+  isShow?: number;
   /**
    * 前端图标
    * @type {string}
@@ -81,4 +86,10 @@ export interface MenuModal {
    * @memberof MenuModal
    */
   title?: string;
+  /**
+   * 菜单类型
+   * @type {number}
+   * @memberof MenuModal
+   */
+  type?: MenuTyoeEnum;
 }
