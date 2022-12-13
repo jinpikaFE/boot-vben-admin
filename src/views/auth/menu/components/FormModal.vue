@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { BasicModal } from '/@/components/Modal';
+  import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, FormActionType, useForm } from '/@/components/Form/index';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { schemas } from './data';
@@ -21,6 +21,8 @@
     schemas,
   });
 
+  const [registterModelInn, { setModalProps }] = useModalInner();
+
   watchEffect(() => {
     if (formElRef.value) {
       if (props?.record) {
@@ -30,21 +32,26 @@
   });
 
   const handleSubmit = async (values: any) => {
-    if (props?.record) {
-      /** 编辑 */
-      await updateMenu({ ...values, id: props?.record?.id });
-      createMessage.success('编辑成功');
-    } else {
-      await createMenu(values);
-      createMessage.success('添加成功');
+    setModalProps({ confirmLoading: true });
+    try {
+      if (props?.record) {
+        /** 编辑 */
+        await updateMenu({ ...values, id: props?.record?.id });
+        createMessage.success('编辑成功');
+      } else {
+        await createMenu(values);
+        createMessage.success('添加成功');
+      }
+      emit('reload');
+      emit('closeModal');
+    } finally {
+      setModalProps({ confirmLoading: false });
     }
-    emit('reload');
-    emit('closeModal');
   };
 </script>
 
 <template>
-  <BasicModal v-bind="$attrs" @ok="submit" :width="800">
+  <BasicModal @register="registterModelInn" v-bind="$attrs" @ok="submit" :width="800">
     <BasicForm
       @register="register"
       @submit="handleSubmit"
