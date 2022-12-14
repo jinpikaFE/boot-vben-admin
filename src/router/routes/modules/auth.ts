@@ -31,6 +31,24 @@ const auth: AppRouteModule = {
         icon: 'simple-icons:about-dot-me',
       },
     },
+    {
+      path: 'role',
+      name: 'Role',
+      component: () => import('/@/views/auth/role/index.vue'),
+      meta: {
+        title: t('routes.auth.role'),
+        icon: 'simple-icons:about-dot-me',
+      },
+    },
+    {
+      path: 'resource',
+      name: 'Resource',
+      component: () => import('/@/views/auth/resource/index.vue'),
+      meta: {
+        title: t('routes.auth.resource'),
+        icon: 'simple-icons:about-dot-me',
+      },
+    },
   ],
 };
 

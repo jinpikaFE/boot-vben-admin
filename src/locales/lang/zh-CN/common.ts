@@ -22,4 +22,5 @@ export default {
   id: '序号',
   createTime: '创建时间',
   icon: '图标',
+  sort: '排序',
 };

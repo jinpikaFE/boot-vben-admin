@@ -13,4 +13,13 @@ export default {
     isShow: '是否显示',
     sort: '排序',
   },
+  role: {
+    name: '角色名称',
+    status: '是否启用',
+    sort: '排序',
+    description: '描述',
+  },
+  resourceCategory: {
+    name: '分类名称',
+  },
 };

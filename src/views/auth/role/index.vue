@@ -1,26 +1,38 @@
 <script lang="ts" setup>
   import { PageWrapper } from '/@/components/Page';
-  import { useI18n } from '/@/hooks/web/useI18n';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { getColumns, searchFormSchema } from './data';
-  import { delMenu, getMenuList } from '/@/api/sys/menu';
-  import { useMessage } from '/@/hooks/web/useMessage';
-  import { useModal } from '/@/components/Modal';
-  import { reactive } from 'vue';
   import FormModal from './components/FormModal.vue';
+  import { reactive } from 'vue';
+  import { useModal } from '/@/components/Modal';
+  import { useMessage } from '/@/hooks/web/useMessage';
+  import { useI18n } from '/@/hooks/web/useI18n';
+  import { delRole, getRoleList } from '/@/api/sys/role';
 
   const { t } = useI18n();
 
-  const columns = getColumns();
-
+  const searchInfo = reactive<Recordable>({});
   const { createMessage } = useMessage();
 
+  const columns = getColumns();
+
+  const state: {
+    record: any;
+  } = reactive({
+    record: {},
+  });
+
   const [registerTable, { reload }] = useTable({
-    title: '菜单列表',
-    api: async () => {
-      const res = await getMenuList();
+    title: '角色列表',
+    api: async ({ page, pageSize, ...restParams }) => {
+      const res = await getRoleList({
+        pageNum: page,
+        pageSize,
+        ...restParams,
+      });
       return {
-        items: res,
+        total: res?.total,
+        items: res?.list,
       };
     },
     rowKey: 'id',
@@ -30,11 +42,14 @@
       schemas: searchFormSchema,
       autoSubmitOnEnter: true,
     },
-    useSearchForm: false,
+    useSearchForm: true,
     showTableSetting: true,
     bordered: true,
     showIndexColumn: false,
-    pagination: false,
+    handleSearchInfoFn(info) {
+      console.log('handleSearchInfoFn', info);
+      return info;
+    },
     actionColumn: {
       title: '操作',
       dataIndex: 'action',
@@ -42,13 +57,16 @@
     },
   });
 
-  /** formModal */
-  const state: {
-    record: any;
-  } = reactive({
-    record: {},
-  });
   const [modalRegister, { openModal, closeModal }] = useModal();
+
+  const handleDelete = async (record: Recordable) => {
+    await delRole({
+      id: record?.id,
+    });
+    createMessage.success('删除成功');
+    reload();
+  };
+
   const handleEdit = (record: Recordable) => {
     openModal();
     state.record = record;
@@ -57,18 +75,11 @@
     state.record = undefined;
     openModal();
   };
-
-  const handleDelete = async (record: Recordable) => {
-    await delMenu({
-      id: record?.id,
-    });
-    createMessage.success('删除成功');
-    reload();
-  };
 </script>
+
 <template>
-  <PageWrapper :title="t('routes.auth.menu')">
-    <BasicTable @register="registerTable">
+  <PageWrapper :title="t('routes.auth.role')">
+    <BasicTable @register="registerTable" :searchInfo="searchInfo">
       <template #toolbar>
         <a-button type="primary" @click="handleCreate"> 添加 </a-button>
       </template>
@@ -77,18 +88,17 @@
           :actions="[
             {
               icon: 'clarity:note-edit-line',
-              tooltip: '编辑',
+              tooltip: '编辑用户资料',
               onClick: handleEdit.bind(null, record),
             },
             {
               icon: 'ant-design:delete-outlined',
               color: 'error',
-              tooltip: '删除',
+              tooltip: '删除此账号',
               popConfirm: {
                 title: '是否确认删除',
                 confirm: handleDelete.bind(null, record),
               },
-              ifShow: !(record?.children?.length > 0),
             },
           ]"
         />

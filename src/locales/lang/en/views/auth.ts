@@ -13,4 +13,13 @@ export default {
     isShow: 'IsShow',
     sort: 'Sort',
   },
+  role: {
+    name: 'Name',
+    status: 'Status',
+    sort: 'Sort',
+    description: 'Description',
+  },
+  resourceCategory: {
+    name: 'Name',
+  },
 };
