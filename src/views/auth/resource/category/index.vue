@@ -4,10 +4,11 @@
   import { getColumns, searchFormSchema } from './data';
   import FormModal from './components/FormModal.vue';
   import { reactive } from 'vue';
-  import { delUser, getUserList } from '/@/api/sys/user';
   import { useModal } from '/@/components/Modal';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { useI18n } from '/@/hooks/web/useI18n';
+  import { delResourceCategory, getResourceCategoryList } from '/@/api/sys/resourceCategory';
+  import { useRouter } from 'vue-router';
 
   const { t } = useI18n();
 
@@ -16,6 +17,8 @@
 
   const columns = getColumns();
 
+  const { push } = useRouter();
+
   const state: {
     record: any;
   } = reactive({
@@ -23,17 +26,10 @@
   });
 
   const [registerTable, { reload }] = useTable({
-    title: '账号列表',
-    api: async ({ page, pageSize, ...restParams }) => {
-      const res = await getUserList({
-        pageNum: page,
-        pageSize,
-        ...restParams,
-      });
-      return {
-        total: res?.total,
-        items: res?.list,
-      };
+    title: '资源分类列表',
+    api: async () => {
+      const res = await getResourceCategoryList();
+      return res;
     },
     rowKey: 'id',
     columns,
@@ -60,7 +56,7 @@
   const [modalRegister, { openModal, closeModal }] = useModal();
 
   const handleDelete = async (record: Recordable) => {
-    await delUser({
+    await delResourceCategory({
       id: record?.id,
     });
     createMessage.success('删除成功');
@@ -78,7 +74,7 @@
 </script>
 
 <template>
-  <PageWrapper :title="t('routes.auth.user')">
+  <PageWrapper :title="t('routes.auth.resource')">
     <BasicTable @register="registerTable" :searchInfo="searchInfo">
       <template #toolbar>
         <a-button type="primary" @click="handleCreate"> 添加 </a-button>
@@ -86,6 +82,17 @@
       <template #action="{ record }">
         <TableAction
           :actions="[
+            {
+              label: '资源列表',
+              onClick: () => {
+                push({
+                  path: `/auth/resource/${record?.id}`,
+                  query: {
+                    categoryName: record?.name,
+                  },
+                });
+              },
+            },
             {
               icon: 'clarity:note-edit-line',
               tooltip: '编辑',

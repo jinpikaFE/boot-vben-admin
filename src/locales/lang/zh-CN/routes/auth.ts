@@ -4,4 +4,5 @@ export default {
   menu: '菜单管理',
   role: '角色管理',
   resource: '资源管理',
+  resourceList: '资源列表',
 };

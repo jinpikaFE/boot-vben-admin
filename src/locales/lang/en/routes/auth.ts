@@ -4,4 +4,5 @@ export default {
   menu: 'MenuManage',
   role: 'RoleManage',
   resource: 'ResourceManage',
+  resourceList: 'ResourceList',
 };

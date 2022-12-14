@@ -21,4 +21,5 @@ export default {
   createTime: 'CreateTime',
   icon: 'Icon',
   sort: 'Sort',
+  description: 'Description',
 };

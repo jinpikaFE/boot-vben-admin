@@ -3,16 +3,17 @@
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
   import { getColumns, searchFormSchema } from './data';
   import FormModal from './components/FormModal.vue';
-  import { reactive } from 'vue';
+  import { reactive, unref } from 'vue';
   import { useModal } from '/@/components/Modal';
   import { useMessage } from '/@/hooks/web/useMessage';
-  import { useI18n } from '/@/hooks/web/useI18n';
   import { delResourceCategory, getResourceCategoryList } from '/@/api/sys/resourceCategory';
-
-  const { t } = useI18n();
+  import { useRouter } from 'vue-router';
 
   const searchInfo = reactive<Recordable>({});
   const { createMessage } = useMessage();
+  const { currentRoute } = useRouter();
+  const { params, query } = unref(currentRoute);
+  console.log(params, query);
 
   const columns = getColumns();
 
@@ -71,7 +72,7 @@
 </script>
 
 <template>
-  <PageWrapper :title="t('routes.auth.resource')">
+  <PageWrapper :title="query?.categoryName">
     <BasicTable @register="registerTable" :searchInfo="searchInfo">
       <template #toolbar>
         <a-button type="primary" @click="handleCreate"> 添加 </a-button>
@@ -81,13 +82,13 @@
           :actions="[
             {
               icon: 'clarity:note-edit-line',
-              tooltip: '编辑用户资料',
+              tooltip: '编辑',
               onClick: handleEdit.bind(null, record),
             },
             {
               icon: 'ant-design:delete-outlined',
               color: 'error',
-              tooltip: '删除此账号',
+              tooltip: '删除',
               popConfirm: {
                 title: '是否确认删除',
                 confirm: handleDelete.bind(null, record),

@@ -22,4 +22,8 @@ export default {
   resourceCategory: {
     name: '分类名称',
   },
+  resource: {
+    name: '资源名称',
+    url: '资源路径',
+  },
 };

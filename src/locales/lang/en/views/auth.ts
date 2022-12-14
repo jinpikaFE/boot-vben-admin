@@ -22,4 +22,8 @@ export default {
   resourceCategory: {
     name: 'Name',
   },
+  resource: {
+    name: 'Name',
+    url: 'Url',
+  },
 };

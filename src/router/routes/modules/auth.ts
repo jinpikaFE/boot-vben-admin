@@ -41,12 +41,25 @@ const auth: AppRouteModule = {
       },
     },
     {
-      path: 'resource',
-      name: 'Resource',
-      component: () => import('/@/views/auth/resource/index.vue'),
+      path: 'resourceCategory',
+      name: 'ResourceCategory',
+      component: () => import('/@/views/auth/resource/category/index.vue'),
       meta: {
         title: t('routes.auth.resource'),
         icon: 'simple-icons:about-dot-me',
+      },
+    },
+    {
+      path: 'resource/:categoryId',
+      name: 'Resource',
+      component: () => import('/@/views/auth/resource/resource/index.vue'),
+      meta: {
+        title: t('routes.auth.resourceList'),
+        icon: 'simple-icons:about-dot-me',
+        hideMenu: true,
+        showMenu: false,
+        currentActiveMenu: '/auth/resourceCategory',
+        hideBreadcrumb: true,
       },
     },
   ],

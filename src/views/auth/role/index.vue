@@ -88,13 +88,13 @@
           :actions="[
             {
               icon: 'clarity:note-edit-line',
-              tooltip: '编辑用户资料',
+              tooltip: '编辑',
               onClick: handleEdit.bind(null, record),
             },
             {
               icon: 'ant-design:delete-outlined',
               color: 'error',
-              tooltip: '删除此账号',
+              tooltip: '删除',
               popConfirm: {
                 title: '是否确认删除',
                 confirm: handleDelete.bind(null, record),
