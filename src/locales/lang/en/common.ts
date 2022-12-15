@@ -19,6 +19,7 @@ export default {
   dark: 'Dark',
   id: 'ID',
   createTime: 'CreateTime',
+  updateTime: 'UpdateTime',
   icon: 'Icon',
   sort: 'Sort',
   description: 'Description',

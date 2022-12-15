@@ -30,6 +30,13 @@ export function getColumns(): BasicColumn[] {
       },
     },
     {
+      dataIndex: 'updateTime',
+      title: t('common.updateTime'),
+      customRender: ({ record }) => {
+        return formatToDateTime(record?.updateTime);
+      },
+    },
+    {
       dataIndex: 'loginTime',
       title: t('views.auth.user.loginTime'),
       customRender: ({ record }) => {

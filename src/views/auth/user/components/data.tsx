@@ -80,6 +80,7 @@ export const schemas: FormSchema[] = [
     field: 'status',
     component: 'RadioGroup',
     label: '是否启用',
+    defaultValue: 1,
     componentProps: {
       placeholder: '请选择',
       options: [
