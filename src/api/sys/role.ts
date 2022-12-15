@@ -3,6 +3,7 @@ import { RoleModal } from './model/roleModel';
 
 enum Api {
   GetRoleList = '/v1/role/list',
+  GetRoleListAll = '/v1/role/listAll',
   DelRole = '/v1/role/delete',
   CreateRole = '/v1/role/create',
   UpdateRole = '/v1/role/update',
@@ -14,6 +15,14 @@ enum Api {
 
 export const getRoleList = (params: Global.BasicPageParams & { keyword?: string }) => {
   return defHttp.get<Global.ListResult<RoleModal>>({ url: Api.GetRoleList, params });
+};
+
+/**
+ * @description: Get 获取全部角色
+ */
+
+export const getRoleListAll = () => {
+  return defHttp.get<RoleModal[]>({ url: Api.GetRoleListAll });
 };
 
 /**

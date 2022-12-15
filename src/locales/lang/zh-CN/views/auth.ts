@@ -18,6 +18,7 @@ export default {
     status: '是否启用',
     sort: '排序',
     description: '描述',
+    adminCount: '用户数',
   },
   resourceCategory: {
     name: '分类名称',

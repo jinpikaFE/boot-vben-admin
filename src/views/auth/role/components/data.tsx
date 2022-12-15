@@ -1,77 +1,32 @@
-import { h } from 'vue';
+import { getMenuList } from '/@/api/sys/menu';
 import { FormSchema } from '/@/components/Form';
-import { uploadApi } from '/@/api/sys/upload';
-import { CropperAvatar } from '/@/components/Cropper';
-import { UploadApiResult } from '/@/api/sys/model/uploadModel';
+import { treeKeyChange } from '/@/utils/helper/treeHelper';
 
 /** 表单列 */
 export const schemas: FormSchema[] = [
   {
-    field: 'username',
+    field: 'name',
     component: 'Input',
-    label: '用户名',
+    label: '角色名称',
     componentProps: {
       placeholder: '请输入',
     },
-    rules: [{ required: true, message: '请输入' }],
-  },
-  {
-    field: 'nickName',
-    component: 'Input',
-    label: '昵称',
-    componentProps: {
-      placeholder: '请输入',
-    },
-    rules: [{ required: true, message: '请输入' }],
-  },
-  {
-    field: 'email',
-    component: 'Input',
-    label: '邮箱',
-    componentProps: {
-      placeholder: '请输入',
-    },
-    rules: [{ required: true, message: '请输入' }],
-  },
-  {
-    field: 'password',
-    component: 'InputPassword',
-    label: '密码',
-    componentProps: {
-      placeholder: '请输入',
-    },
-    rules: [{ required: true, message: '请输入' }],
-  },
-  {
-    field: 'icon',
-    component: 'Upload',
-    label: '头像',
     required: true,
-    rules: [
-      {
-        validator(rule, value) {
-          if (!value) {
-            return Promise.reject(new Error('请上传'));
-          }
-          return Promise.resolve();
-        },
-      },
-    ],
-    render: ({ model, field }) => {
-      return h(CropperAvatar, {
-        placeholder: '请输入',
-        uploadApi,
-        value: model[field],
-        onChange: (e: ChangeEvent, data: UploadApiResult) => {
-          model[field] = data?.data?.url;
-        },
-      } as any);
-    },
   },
   {
-    field: 'note',
+    field: 'sort',
+    component: 'InputNumber',
+    label: '排序',
+    componentProps: {
+      placeholder: '请输入',
+      precision: 0,
+    },
+    required: true,
+  },
+  {
+    field: 'description',
     component: 'InputTextArea',
-    label: '备注',
+    label: '描述',
     componentProps: {
       placeholder: '请输入',
     },
@@ -80,6 +35,7 @@ export const schemas: FormSchema[] = [
     field: 'status',
     component: 'RadioGroup',
     label: '是否启用',
+    defaultValue: 1,
     componentProps: {
       placeholder: '请选择',
       options: [
@@ -92,6 +48,25 @@ export const schemas: FormSchema[] = [
           value: 0,
         },
       ],
+    },
+  },
+  {
+    field: 'menu',
+    component: 'ApiTreeSelect',
+    label: '菜单',
+    defaultValue: 1,
+    required: true,
+    componentProps: {
+      placeholder: '请选择',
+      multiple: true,
+      treeCheckable: true,
+      api: async () => {
+        const res = await getMenuList();
+        return treeKeyChange(res, {
+          labelField: 'title',
+          valueField: 'id',
+        });
+      },
     },
   },
 ];

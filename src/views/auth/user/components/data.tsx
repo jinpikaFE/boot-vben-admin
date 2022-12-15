@@ -3,6 +3,7 @@ import { FormSchema } from '/@/components/Form';
 import { uploadApi } from '/@/api/sys/upload';
 import { CropperAvatar } from '/@/components/Cropper';
 import { UploadApiResult } from '/@/api/sys/model/uploadModel';
+import { getRoleListAll } from '/@/api/sys/role';
 
 /** 表单列 */
 export const schemas: FormSchema[] = [
@@ -93,6 +94,23 @@ export const schemas: FormSchema[] = [
           value: 0,
         },
       ],
+    },
+  },
+  {
+    field: 'role',
+    component: 'ApiSelect',
+    label: '角色',
+    required: true,
+    componentProps: {
+      placeholder: '请选择',
+      mode: 'multiple',
+      api: async () => {
+        const res = await getRoleListAll();
+        return res?.map((item) => ({
+          label: item.name,
+          value: item.id,
+        }));
+      },
     },
   },
 ];

@@ -42,6 +42,10 @@ export function getColumns(): BasicColumn[] {
         return '-';
       },
     },
+    {
+      dataIndex: 'adminCount',
+      title: t('views.auth.role.adminCount'),
+    },
   ];
 }
 

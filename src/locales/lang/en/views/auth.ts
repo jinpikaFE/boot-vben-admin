@@ -18,6 +18,7 @@ export default {
     status: 'Status',
     sort: 'Sort',
     description: 'Description',
+    adminCount: 'AdminCount',
   },
   resourceCategory: {
     name: 'Name',
