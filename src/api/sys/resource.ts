@@ -1,5 +1,5 @@
 import { defHttp } from '/@/utils/http/axios';
-import { ResourceModal } from './model/resourceModel';
+import { GetResourceParmas, ResourceModal } from './model/resourceModel';
 
 enum Api {
   GetResourceList = '/v1/resource/list',
@@ -12,7 +12,7 @@ enum Api {
  * @description: Get 资源列表
  */
 
-export const getResourceList = (params: Global.BasicPageParams & { keyword?: string }) => {
+export const getResourceList = (params: Global.BasicPageParams & GetResourceParmas) => {
   return defHttp.get<Global.ListResult<ResourceModal>>({ url: Api.GetResourceList, params });
 };
 
@@ -20,8 +20,10 @@ export const getResourceList = (params: Global.BasicPageParams & { keyword?: str
  * @description: Post 删除资源
  * @returns
  */
-export const delResource = (params: { id: string }) => {
-  return defHttp.post({ url: `${Api.DelResource}`, params: { ids: params?.id } });
+export const delResource = (data: { id: string }) => {
+  return defHttp.post({
+    url: `${Api.DelResource}/${data?.id}`,
+  });
 };
 
 /**

@@ -3,11 +3,14 @@
   import { BasicForm, FormActionType, useForm } from '/@/components/Form/index';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { schemas } from './data';
-  import { ref, watchEffect } from 'vue';
+  import { ref, unref, watchEffect } from 'vue';
   import { GetUserInfoModel } from '/@/api/sys/model/userModel';
-  import { createResourceCategory, updateResourceCategory } from '/@/api/sys/resourceCategory';
+  import { createResource, updateResource } from '/@/api/sys/resource';
+  import { useRouter } from 'vue-router';
 
   const props = defineProps<{ record: GetUserInfoModel }>();
+  const { currentRoute } = useRouter();
+  const { params } = unref(currentRoute);
 
   const emit = defineEmits(['reload', 'closeModal']);
 
@@ -40,10 +43,10 @@
     try {
       if (props?.record) {
         /** 编辑 */
-        await updateResourceCategory({ ...values, id: props?.record?.id });
+        await updateResource({ ...values, id: props?.record?.id, categoryId: params?.categoryId });
         createMessage.success('编辑成功');
       } else {
-        await createResourceCategory(values);
+        await createResource({ ...values, categoryId: params?.categoryId });
         createMessage.success('添加成功');
       }
       emit('reload');

@@ -43,6 +43,15 @@ export interface ResourceModal {
 }
 
 /**
+ * 支援列表请求 params
+ */
+export interface GetResourceParmas {
+  categoryId?: number;
+  nameKeyword?: string;
+  urlKeyword?: string;
+}
+
+/**
  * UmsResourceCategory对象，资源分类表
  * @export
  * @interface ResourceCategoryModal

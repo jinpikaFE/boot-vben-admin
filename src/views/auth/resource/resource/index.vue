@@ -6,8 +6,8 @@
   import { reactive, unref } from 'vue';
   import { useModal } from '/@/components/Modal';
   import { useMessage } from '/@/hooks/web/useMessage';
-  import { delResourceCategory, getResourceCategoryList } from '/@/api/sys/resourceCategory';
   import { useRouter } from 'vue-router';
+  import { delResource, getResourceList } from '/@/api/sys/resource';
 
   const searchInfo = reactive<Recordable>({});
   const { createMessage } = useMessage();
@@ -25,9 +25,17 @@
 
   const [registerTable, { reload }] = useTable({
     title: '资源列表',
-    api: async () => {
-      const res = await getResourceCategoryList();
-      return res;
+    api: async ({ page, pageSize, ...restParams }) => {
+      const res = await getResourceList({
+        pageNum: page,
+        pageSize,
+        ...restParams,
+        categoryId: params?.categoryId,
+      });
+      return {
+        total: res?.total,
+        items: res?.list,
+      };
     },
     rowKey: 'id',
     columns,
@@ -54,7 +62,7 @@
   const [modalRegister, { openModal, closeModal }] = useModal();
 
   const handleDelete = async (record: Recordable) => {
-    await delResourceCategory({
+    await delResource({
       id: record?.id,
     });
     createMessage.success('删除成功');
@@ -72,7 +80,7 @@
 </script>
 
 <template>
-  <PageWrapper :title="query?.categoryName">
+  <PageWrapper :title="query?.categoryName as string || ''">
     <BasicTable @register="registerTable" :searchInfo="searchInfo">
       <template #toolbar>
         <a-button type="primary" @click="handleCreate"> 添加 </a-button>

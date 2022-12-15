@@ -34,8 +34,14 @@ export function getColumns(): BasicColumn[] {
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: 'keyword',
-    label: '搜索',
+    field: 'nameKeyword',
+    label: '资源名称',
+    component: 'Input',
+    colProps: { span: 8 },
+  },
+  {
+    field: 'urlKeyword',
+    label: '资源路径',
     component: 'Input',
     colProps: { span: 8 },
   },
