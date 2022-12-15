@@ -97,7 +97,7 @@ export const schemas: FormSchema[] = [
     },
   },
   {
-    field: 'role',
+    field: 'roleIds',
     component: 'ApiSelect',
     label: '角色',
     required: true,
