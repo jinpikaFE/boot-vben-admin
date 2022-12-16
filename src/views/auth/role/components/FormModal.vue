@@ -3,9 +3,9 @@
   import { BasicForm, FormActionType, useForm } from '/@/components/Form/index';
   import { useMessage } from '/@/hooks/web/useMessage';
   import { schemas } from './data';
-  import { createUser, updateUser } from '/@/api/sys/user';
   import { ref, watchEffect } from 'vue';
   import { GetUserInfoModel } from '/@/api/sys/model/userModel';
+  import { createRole, updateRole } from '/@/api/sys/role';
   const props = defineProps<{ record: GetUserInfoModel }>();
 
   const emit = defineEmits(['reload', 'closeModal']);
@@ -39,10 +39,10 @@
     try {
       if (props?.record) {
         /** 编辑 */
-        await updateUser({ ...values, id: props?.record?.id });
+        await updateRole({ ...values, id: props?.record?.id });
         createMessage.success('编辑成功');
       } else {
-        await createUser(values);
+        await createRole(values);
         createMessage.success('添加成功');
       }
       emit('reload');
