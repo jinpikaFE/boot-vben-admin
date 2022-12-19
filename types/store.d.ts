@@ -1,6 +1,6 @@
 import { ErrorTypeEnum } from '/@/enums/exceptionEnum';
 import { MenuModeEnum, MenuTypeEnum } from '/@/enums/menuEnum';
-import { RoleInfo } from '/@/api/sys/model/userModel';
+import { MenuModal } from '/@/api/sys/model/menuModel';
 
 // Lock screen information
 export interface LockInfo {
@@ -30,15 +30,14 @@ export interface ErrorLogInfo {
   time?: string;
 }
 
-export interface UserInfo {
-  userId: string | number;
-  username: string;
-  realName: string;
-  avatar: string;
-  desc?: string;
+export type UserInfo = {
+  /** 接口返回 homePath 登录就跳转 homePath 没有则跳转 PageEnum.BASE_HOME */
   homePath?: string;
-  roles: RoleInfo[];
-}
+  roles: string[];
+  menus: MenuModal[];
+  icon: string;
+  username: string;
+};
 
 export interface BeforeMiniState {
   menuCollapsed?: boolean;

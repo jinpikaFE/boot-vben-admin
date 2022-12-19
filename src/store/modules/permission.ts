@@ -19,7 +19,6 @@ import { ERROR_LOG_ROUTE, PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
 import { filter } from '/@/utils/helper/treeHelper';
 
 import { getMenuList } from '/@/api/sys/menu';
-import { getPermCode } from '/@/api/sys/user';
 
 import { useMessage } from '/@/hooks/web/useMessage';
 import { PageEnum } from '/@/enums/pageEnum';
@@ -49,9 +48,6 @@ export const usePermissionStore = defineStore({
     frontMenuList: [],
   }),
   getters: {
-    getPermCodeList(): string[] | number[] {
-      return this.permCodeList;
-    },
     getBackMenuList(): Menu[] {
       return this.backMenuList;
     },
@@ -93,7 +89,8 @@ export const usePermissionStore = defineStore({
       this.lastBuildMenuTime = 0;
     },
     async changePermissionCode() {
-      const codeList = await getPermCode();
+      /** 前端标识 name 作为 权限标识 */
+      const codeList = this.backMenuList?.map((item) => item?.name);
       this.setPermCodeList(codeList);
     },
     async buildRoutesAction(): Promise<AppRouteRecordRaw[]> {
@@ -186,6 +183,9 @@ export const usePermissionStore = defineStore({
           try {
             this.changePermissionCode();
             routeList = (await getMenuList()) as AppRouteRecordRaw[];
+            /** 因为保存的时子节点，所以，缺少父节点。 */
+            /** 根据前端定义好的路由，取出权限子节点菜单，及父节点菜单，生成新的前端路由数据 */
+            /** 待处理 */
           } catch (error) {
             console.error(error);
           }
