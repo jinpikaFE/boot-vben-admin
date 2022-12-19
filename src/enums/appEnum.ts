@@ -29,11 +29,11 @@ export enum SessionTimeoutProcessingEnum {
  * 权限模式
  */
 export enum PermissionModeEnum {
-  // role
+  // role 前端模式（菜单路由分开）
   ROLE = 'ROLE',
   // black
   BACK = 'BACK',
-  // route mapping
+  // route mapping 前端模式（菜单由路由生成，默认）
   ROUTE_MAPPING = 'ROUTE_MAPPING',
 }
 
