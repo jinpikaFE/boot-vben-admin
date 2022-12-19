@@ -1,4 +1,5 @@
 import { getMenuList } from '/@/api/sys/menu';
+import { getResourceCategoryList } from '/@/api/sys/resourceCategory';
 import { FormSchema } from '/@/components/Form';
 import { treeKeyChange } from '/@/utils/helper/treeHelper';
 
@@ -51,21 +52,45 @@ export const schemas: FormSchema[] = [
     },
   },
   {
-    field: 'menu',
+    field: 'menus',
     component: 'ApiTreeSelect',
     label: '菜单',
-    defaultValue: 1,
     required: true,
     componentProps: {
       placeholder: '请选择',
       multiple: true,
       treeCheckable: true,
+      treeDefaultExpandAll: true,
       api: async () => {
         const res = await getMenuList();
         return treeKeyChange(res, {
           labelField: 'title',
           valueField: 'id',
         });
+      },
+    },
+  },
+  {
+    field: 'resources',
+    component: 'ApiTreeSelect',
+    label: '资源',
+    required: true,
+    componentProps: {
+      placeholder: '请选择',
+      multiple: true,
+      treeCheckable: true,
+      treeDefaultExpandAll: true,
+      api: async () => {
+        const res = await getResourceCategoryList();
+        return res?.map((item) => ({
+          label: item?.name,
+          value: item?.id + '' + item?.name,
+          checkable: false,
+          children: item?.resources?.map((citem) => ({
+            label: citem?.name,
+            value: citem?.id,
+          })),
+        }));
       },
     },
   },

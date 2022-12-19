@@ -1,3 +1,6 @@
+import { MenuModal } from './menuModel';
+import { ResourceModal } from './resourceModel';
+
 /**
  * UmsRole对象，后台用户角色表
  * @export
@@ -46,4 +49,7 @@ export interface RoleModal {
    * @memberof RoleModal
    */
   status?: number;
+
+  menus?: MenuModal[];
+  resources?: ResourceModal[];
 }

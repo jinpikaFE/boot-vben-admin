@@ -4,9 +4,9 @@
   import { useMessage } from '/@/hooks/web/useMessage';
   import { schemas } from './data';
   import { ref, watchEffect } from 'vue';
-  import { GetUserInfoModel } from '/@/api/sys/model/userModel';
   import { createRole, updateRole } from '/@/api/sys/role';
-  const props = defineProps<{ record: GetUserInfoModel }>();
+  import { RoleModal } from '/@/api/sys/model/roleModel';
+  const props = defineProps<{ record: RoleModal }>();
 
   const emit = defineEmits(['reload', 'closeModal']);
 
@@ -14,7 +14,7 @@
 
   const { createMessage } = useMessage();
 
-  const [register, { submit, setFieldsValue, updateSchema }] = useForm({
+  const [register, { submit, setFieldsValue }] = useForm({
     labelWidth: 120,
     labelCol: { span: 6 },
     wrapperCol: { span: 14 },
@@ -26,10 +26,11 @@
   watchEffect(() => {
     if (formElRef.value) {
       if (props?.record) {
-        setFieldsValue(props?.record);
-        updateSchema([{ field: 'password', ifShow: false }]);
-      } else {
-        updateSchema([{ field: 'password', ifShow: true }]);
+        setFieldsValue({
+          ...props?.record,
+          menus: props?.record?.menus?.map((item) => item?.id),
+          resources: props?.record?.resources?.map((item) => item?.id),
+        });
       }
     }
   });

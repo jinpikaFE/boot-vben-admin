@@ -81,4 +81,6 @@ export interface ResourceCategoryModal {
    * @memberof ResourceCategoryModal
    */
   sort?: number;
+
+  resources?: ResourceModal[];
 }
