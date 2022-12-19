@@ -1,3 +1,5 @@
+import { RoleModal } from './roleModel';
+
 /**
  * @description: Login interface parameters
  */
@@ -41,4 +43,5 @@ export interface GetUserInfoModel {
   status: 0 | 1;
   /** 备注 */
   note?: string;
+  roles?: RoleModal[];
 }

@@ -26,7 +26,10 @@
   watchEffect(() => {
     if (formElRef.value) {
       if (props?.record) {
-        setFieldsValue(props?.record);
+        setFieldsValue({
+          ...props?.record,
+          roleIds: props?.record?.roles?.map((item) => item?.id),
+        });
         updateSchema([{ field: 'password', ifShow: false }]);
       } else {
         updateSchema([{ field: 'password', ifShow: true }]);
