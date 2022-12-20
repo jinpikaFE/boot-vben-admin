@@ -5,6 +5,8 @@ import { getParentLayout, LAYOUT, EXCEPTION_COMPONENT } from '/@/router/constant
 import { cloneDeep, omit } from 'lodash-es';
 import { warn } from '/@/utils/log';
 import { createRouter, createWebHashHistory } from 'vue-router';
+import { MenuModal } from '/@/api/sys/model/menuModel';
+import { filter } from '/@/utils/helper/treeHelper';
 
 export type LayoutMapKey = 'LAYOUT';
 const IFRAME = () => import('/@/views/sys/iframe/FrameBlank.vue');
@@ -162,3 +164,15 @@ function isMultipleRoute(routeModule: AppRouteModule) {
   }
   return flag;
 }
+
+/**
+ *
+ * @param frontRoute 前端路由
+ * @param backCanMenu 后端有权限的菜单（子）
+ */
+export const matchRouteMenu = (frontRoute: AppRouteRecordRaw[], backCanMenu: MenuModal[]) => {
+  const resules = filter<AppRouteRecordRaw>(frontRoute, (node) => {
+    return backCanMenu?.findIndex((item) => item?.name === node?.name) !== -1;
+  });
+  return resules;
+};

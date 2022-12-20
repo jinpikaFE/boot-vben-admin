@@ -6,7 +6,7 @@ import { useI18n } from '/@/hooks/web/useI18n';
 import { useUserStore } from './user';
 import { useAppStoreWithOut } from './app';
 import { toRaw } from 'vue';
-import { transformObjToRoute, flatMultiLevelRoutes } from '/@/router/helper/routeHelper';
+import { flatMultiLevelRoutes, matchRouteMenu } from '/@/router/helper/routeHelper';
 import { transformRouteToMenu } from '/@/router/helper/menuHelper';
 
 import projectSetting from '/@/settings/projectSetting';
@@ -16,12 +16,11 @@ import { PermissionModeEnum } from '/@/enums/appEnum';
 import { asyncRoutes } from '/@/router/routes';
 import { ERROR_LOG_ROUTE, PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
 
-import { filter } from '/@/utils/helper/treeHelper';
-
-import { getMenuList } from '/@/api/sys/menu';
+import { filter, forEach } from '/@/utils/helper/treeHelper';
 
 import { useMessage } from '/@/hooks/web/useMessage';
 import { PageEnum } from '/@/enums/pageEnum';
+import { getMenuList } from '/@/api/sys/menu';
 
 interface PermissionState {
   // Permission code list
@@ -185,19 +184,39 @@ export const usePermissionStore = defineStore({
           let routeList: AppRouteRecordRaw[] = [];
           try {
             this.changePermissionCode();
-            routeList = (await getMenuList()) as AppRouteRecordRaw[];
+            const res = await getMenuList();
+            forEach(asyncRoutes, (node) => {
+              forEach(res, (citem) => {
+                if (node?.name === citem?.name) {
+                  node.meta.icon = citem?.icon;
+                  node.meta.orderNo = citem?.sort;
+                  node.meta.hideMenu = citem?.isShow === 0;
+                }
+              });
+            });
+            if (userStore.getUserInfo?.roles?.includes('超级管理员')) {
+              routeList = asyncRoutes;
+            } else {
+              routeList = matchRouteMenu(asyncRoutes, userStore?.getUserInfo?.menus);
+            }
+
             /** 因为保存的时子节点，所以，缺少父节点。 */
             /** 根据前端定义好的路由，取出权限子节点菜单，及父节点菜单，生成新的前端路由数据 */
             /** 待处理 */
+            console.log(asyncRoutes, routeList);
           } catch (error) {
             console.error(error);
           }
 
           // Dynamically introduce components
-          routeList = transformObjToRoute(routeList);
+          /** componet 转化可能不需要 */
+          // routeList = transformObjToRoute(routeList);
 
           //  Background routing to menu structure
           const backMenuList = transformRouteToMenu(routeList);
+          backMenuList.sort((a, b) => {
+            return (a.meta?.orderNo || 0) - (b.meta?.orderNo || 0);
+          });
           this.setBackMenuList(backMenuList);
 
           // remove meta.ignoreRoute item
