@@ -41,26 +41,39 @@ const auth: AppRouteModule = {
       },
     },
     {
-      path: 'resourceCategory',
-      name: 'ResourceCategory',
-      component: () => import('/@/views/auth/resource/category/index.vue'),
-      meta: {
-        title: t('routes.auth.resource'),
-        icon: 'simple-icons:about-dot-me',
-      },
-    },
-    {
-      path: 'resource/:categoryId',
+      path: 'resource',
       name: 'Resource',
-      component: () => import('/@/views/auth/resource/resource/index.vue'),
+      component: () => import('/@/views/auth/resource/category/index.vue'),
+      // redirect: '/auth/resource/resourceCategory',
       meta: {
-        title: t('routes.auth.resourceList'),
-        icon: 'simple-icons:about-dot-me',
-        hideMenu: true,
-        showMenu: false,
-        currentActiveMenu: '/auth/resourceCategory',
-        hideBreadcrumb: true,
+        icon: 'ion:grid-outline',
+        title: t('routes.auth.resource'),
+        orderNo: 1,
       },
+      children: [
+        {
+          path: 'resourceCategory',
+          name: 'ResourceCategory',
+          component: () => import('/@/views/auth/resource/category/index.vue'),
+          meta: {
+            title: t('routes.auth.resourceCategory'),
+            icon: 'simple-icons:about-dot-me',
+          },
+        },
+        {
+          path: 'resourceList/:categoryId',
+          name: 'ResourceList',
+          component: () => import('/@/views/auth/resource/resource/index.vue'),
+          meta: {
+            title: t('routes.auth.resourceList'),
+            icon: 'simple-icons:about-dot-me',
+            hideMenu: true,
+            showMenu: false,
+            currentActiveMenu: '/auth/resource/resourceCategory',
+            hideBreadcrumb: true,
+          },
+        },
+      ],
     },
   ],
 };

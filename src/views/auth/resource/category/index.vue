@@ -86,7 +86,7 @@
               label: '资源列表',
               onClick: () => {
                 push({
-                  path: `/auth/resource/${record?.id}`,
+                  path: `/auth/resource/resourceList/${record?.id}`,
                   query: {
                     categoryName: record?.name,
                   },
